@@ -45,8 +45,6 @@
 - **Car\_brands**
     - id: Int (PK)
     - name: varchar(20), NOT NULL
-    - description: text, NOT NULL
-    - logo: image
 
 - **Car\_classes** CHECK exp_required >= 0
     - id: Int (PK)

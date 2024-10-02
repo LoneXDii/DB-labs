@@ -42,15 +42,16 @@
     - phone\_number: varchar(12)
     - post: varchar(20), NOT NULL
 
------
-
 - **Car\_brands**
     - id: Int (PK)
     - name: varchar(20), NOT NULL
+    - description: text, NOT NULL
+    - logo: image
 
-- **Car\_classes**
+- **Car\_classes** CHECK exp_required >= 0
     - id: Int (PK)
     - name: enum("econom", "premium", "sport"), NOT NULL
+    - exp_required: int, NOT NULL
 
 - **Car\_bodytypes**
     - id: Int (PK)

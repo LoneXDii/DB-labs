@@ -87,5 +87,5 @@
     - order_id: int (FK)
     - user_id: UUID (FK)
 
-### Ненормализованная схема БД:
+### Cхема БД:
 ![Scheme](./DB.drawio.svg)

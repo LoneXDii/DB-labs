@@ -12,6 +12,7 @@ CREATE TABLE Users (
     password_hash VARCHAR(64) NOT NULL,
     role_id INT,
     FOREIGN KEY (role_id) REFERENCES Roles(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Logs (
@@ -22,6 +23,7 @@ CREATE TABLE Logs (
     table_name VARCHAR(20) NOT NULL,
     comment VARCHAR(100) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Employees (
@@ -32,6 +34,7 @@ CREATE TABLE Employees (
     phone_number VARCHAR(12),
     post VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Car_brands (
@@ -60,9 +63,12 @@ CREATE TABLE Cars (
     price FLOAT(9, 2) NOT NULL CHECK (price > 0),
     rent_price FLOAT(6, 2) NOT NULL CHECK (rent_price > 0),
     manufacture_year INT NOT NULL,
-    FOREIGN KEY (brand_id) REFERENCES Car_brands(id),
-    FOREIGN KEY (class_id) REFERENCES Car_classes(id),
+    FOREIGN KEY (brand_id) REFERENCES Car_brands(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (class_id) REFERENCES Car_classes(id)
+    ON DELETE CASCADE,
     FOREIGN KEY (bodytype_id) REFERENCES Car_bodytypes(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Orders (
@@ -73,14 +79,17 @@ CREATE TABLE Orders (
     closed BOOLEAN NOT NULL,
     user_id CHAR(36),
     FOREIGN KEY (user_id) REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Cars_orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     car_id INT,
     order_id INT,
-    FOREIGN KEY (car_id) REFERENCES Cars(id),
+    FOREIGN KEY (car_id) REFERENCES Cars(id)
+    ON DELETE CASCADE,
     FOREIGN KEY (order_id) REFERENCES Orders(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Penaltys (
@@ -90,6 +99,8 @@ CREATE TABLE Penaltys (
     payed BOOLEAN NOT NULL,
     order_id INT,
     user_id CHAR(36),
-    FOREIGN KEY (order_id) REFERENCES Orders(id),
+    FOREIGN KEY (order_id) REFERENCES Orders(id)
+    ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id)
+    ON DELETE CASCADE
 );

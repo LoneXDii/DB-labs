@@ -1,8 +1,25 @@
 USE carrentdb;
 
+SELECT SUM(penalty) FROM penaltys
+group by user_id
+HAVING user_id = '550e8400-e29b-41d4-a716-446655440000';
+
+INSERT INTO Penaltys (penalty, details, payed, order_id, user_id) 
+VALUES (40.00, 'A', FALSE, 1, '550e8400-e29b-41d4-a716-446655440000'),
+	   (60.00, 'B', FALSE, 1, '550e8400-e29b-41d4-a716-446655440000');
+
+SELECT * FROM penaltys
+WHERE user_id = '550e8400-e29b-41d4-a716-446655440000';
+
+UPDATE penaltys
+SET penalty = 10
+WHERE user_id = '550e8400-e29b-41d4-a716-446655440000' AND penalty > 40 and penalty < 60;
+
+SELECT * FROM logs WHERE user_id = '550e8400-e29b-41d4-a716-446655440001';
+
 -- Users CRUD
 INSERT INTO Users (id, username, email, password_hash, role_id) 
-VALUES ('some-uuid', 'username', 'email@example.com', 'hashed_password', 1);
+VALUES ('550e8400-e29b-41d4-a716-446655440011', 'username', 'email@example.com', 'hashed_password', 1);
 
 SELECT * FROM Users;
 
@@ -11,10 +28,10 @@ WHERE role_id = 1;
 
 UPDATE Users 
 SET username = 'new_username' 
-WHERE id = 'some-uuid';
+WHERE id = '550e8400-e29b-41d4-a716-446655440011';
 
 DELETE FROM Users 
-WHERE id = 'some-uuid';
+WHERE id = '550e8400-e29b-41d4-a716-446655440011';
 
 -- Logs CRUD
 INSERT INTO Logs (user_id, datetime, action, table_name, comment) 

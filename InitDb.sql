@@ -12,7 +12,7 @@ CREATE TABLE Users (
     password_hash VARCHAR(64) NOT NULL,
     role_id INT,
     FOREIGN KEY (role_id) REFERENCES Roles(id)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
 );
 
 CREATE TABLE Logs (

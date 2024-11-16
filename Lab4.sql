@@ -46,8 +46,7 @@ HAVING total_penalty > (
 );
 
 -- Вывод информации об общей сумме заказов с ранжированием для каждой роли
-SELECT users.username, users.email, SUM(orders.price) AS total_spent,
-	roles.role,
+SELECT users.username, users.email, SUM(orders.price) AS total_spent, roles.role,
     RANK() OVER (PARTITION BY users.role_id ORDER BY SUM(orders.price) DESC) AS rank_within_role
 FROM users
 	JOIN orders ON users.id = orders.user_id

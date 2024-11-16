@@ -17,13 +17,10 @@ CREATE TABLE Users (
 
 CREATE TABLE Logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id CHAR(36),
     datetime DATETIME NOT NULL,
     action ENUM('create', 'update', 'delete') NOT NULL,
     table_name VARCHAR(20) NOT NULL,
-    comment VARCHAR(100) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(id)
-    ON DELETE CASCADE
+    comment longtext
 );
 
 CREATE TABLE Employees (
@@ -75,7 +72,7 @@ CREATE TABLE Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     start DATETIME NOT NULL,
     end DATETIME NOT NULL,
-    price FLOAT(10, 2) NOT NULL CHECK (price > 0),
+    price FLOAT(10, 2) NOT NULL CHECK (price >= 0),
     closed BOOLEAN NOT NULL,
     user_id CHAR(36),
     FOREIGN KEY (user_id) REFERENCES Users(id)

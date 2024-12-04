@@ -18,4 +18,11 @@ internal class OrderService : IOrderService
 
 		return order;
 	}
+
+	public async Task<List<Order>> GetAllAsync()
+	{
+		var orders = await _repository.GetAllAsync();
+
+		return orders;
+	}
 }

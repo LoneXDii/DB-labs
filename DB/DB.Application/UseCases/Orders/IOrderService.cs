@@ -6,4 +6,5 @@ namespace DB.Application.UseCases.Orders;
 public interface IOrderService
 {
 	Task<Order> GetByIdAsync(int id);
+	Task<List<Order>> GetAllAsync();
 }

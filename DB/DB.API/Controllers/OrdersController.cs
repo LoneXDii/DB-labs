@@ -1,4 +1,5 @@
 ﻿using DB.Application.UseCases.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,5 +31,27 @@ public class OrdersController : ControllerBase
 		var order = await _orderService.GetByIdAsync(id);
 
 		return Ok(order);
+	}
+
+	[HttpGet]
+	[Route("user")]
+	[Authorize(Policy = "Employee")]
+	public async Task<IActionResult> GetByUserAsync()
+	{
+		var userId = HttpContext.User.FindFirst("Id").Value;
+
+		var orders = await _orderService.GetByUserAsync(userId);
+
+		return Ok(orders);
+	}
+
+	[HttpGet]
+	[Route("user/id")]
+	[Authorize(Policy = "Employee")]
+	public async Task<IActionResult> GetByUserAsync([FromQuery] string userId)
+	{
+		var orders = await _orderService.GetByUserAsync(userId);
+
+		return Ok(orders);
 	}
 }

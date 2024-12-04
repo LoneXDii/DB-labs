@@ -115,4 +115,60 @@ internal class CarRepository : IRepository<Car>
 
         var affectedRows = await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
+
+	public async Task<List<Car>> FilterByStringAsync(string column, string value)
+	{
+		var sql = $@"
+        SELECT c.id AS Id,
+               c.model AS Model,
+               c.registration_number AS RegistrationNumber,
+               c.price AS Price,
+               c.rent_price AS RentPrice,
+               c.manufacture_year AS ManufactureYear,
+               c.brand_id AS BrandId,
+               b.name AS BrandName,
+               c.class_id AS ClassId,
+               cl.name AS ClassName,
+               c.bodytype_id AS BodytypeId,
+               bt.name AS BodytypeName
+        FROM Cars c
+        JOIN Car_brands b ON c.brand_id = b.id
+        JOIN Car_classes cl ON c.class_id = cl.id
+        JOIN Car_bodytypes bt ON c.bodytype_id = bt.id
+        WHERE {column} = {{0}}";
+
+		var cars = await _dbContext.Cars
+			.FromSqlRaw(sql, value)
+			.ToListAsync();
+
+		return cars;
+	}
+
+	public async Task<List<Car>> FilterByNumberAsync(string column, int value)
+	{
+		var sql = $@"
+        SELECT c.id AS Id,
+               c.model AS Model,
+               c.registration_number AS RegistrationNumber,
+               c.price AS Price,
+               c.rent_price AS RentPrice,
+               c.manufacture_year AS ManufactureYear,
+               c.brand_id AS BrandId,
+               b.name AS BrandName,
+               c.class_id AS ClassId,
+               cl.name AS ClassName,
+               c.bodytype_id AS BodytypeId,
+               bt.name AS BodytypeName
+        FROM Cars c
+        JOIN Car_brands b ON c.brand_id = b.id
+        JOIN Car_classes cl ON c.class_id = cl.id
+        JOIN Car_bodytypes bt ON c.bodytype_id = bt.id
+        WHERE {column} = {{0}}";
+
+		var cars = await _dbContext.Cars
+			.FromSqlRaw(sql, value)
+			.ToListAsync();
+
+		return cars;
+	}
 }

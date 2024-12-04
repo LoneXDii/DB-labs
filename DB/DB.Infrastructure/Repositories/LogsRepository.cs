@@ -44,4 +44,14 @@ internal class LogsRepository : IRepository<Log>
     {
         throw new NotImplementedException();
     }
+
+	public Task<List<Log>> FilterByNumberAsync(string column, int value)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task<List<Log>> FilterByStringAsync(string column, string value)
+	{
+		throw new NotImplementedException();
+	}
 }

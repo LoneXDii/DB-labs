@@ -25,4 +25,11 @@ internal class OrderService : IOrderService
 
 		return orders;
 	}
+
+	public async Task<List<Order>> GetByUserAsync(string userId)
+	{
+		var orders = await _repository.FilterByStringAsync("user_id", userId);
+
+		return orders;
+	}
 }

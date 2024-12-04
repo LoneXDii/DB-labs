@@ -49,4 +49,14 @@ internal class CarClassRepository : IRepository<CarClass>
         var sql = "DELETE FROM Car_classes WHERE id = {0}";
         await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
+
+	public Task<List<CarClass>> FilterByNumberAsync(string column, int value)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task<List<CarClass>> FilterByStringAsync(string column, string value)
+	{
+		throw new NotImplementedException();
+	}
 }

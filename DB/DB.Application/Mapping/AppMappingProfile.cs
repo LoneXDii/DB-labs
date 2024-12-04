@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using DB.Application.UseCases.Cars.AddCar;
-using DB.Application.UseCases.Cars.UpdateCar;
+using DB.Application.UseCases.BodyTypes.DTO;
+using DB.Application.UseCases.Brands.DTO;
+using DB.Application.UseCases.Cars.DTO;
 using DB.Domain.Entities;
 
 namespace DB.Application.Mapping;
@@ -9,7 +10,13 @@ internal class AppMappingProfile : Profile
 {
     public AppMappingProfile()
     {
-        CreateMap<AddCarRequest, Car>().ReverseMap();
-        CreateMap<UpdateCarRequest, Car>().ReverseMap();
+        CreateMap<AddCarDTO, Car>().ReverseMap();
+        CreateMap<UpdateCarDTO, Car>().ReverseMap();
+
+        CreateMap<AddCarBrandDTO, CarBrand>().ReverseMap();
+        CreateMap<UpdateCarBrandDTO, CarBrand>().ReverseMap();
+
+        CreateMap<AddCarBodyTypeDTO, CarBodyType>().ReverseMap();
+        CreateMap<UpdateCarBodyTypeDTO, CarBodyType>().ReverseMap();
     }
 }

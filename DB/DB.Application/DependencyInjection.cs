@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DB.Application.UseCases.BodyTypes;
+using DB.Application.UseCases.Brands;
+using DB.Application.UseCases.Cars;
+using DB.Application.UseCases.Classes;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace DB.Application;
@@ -9,6 +13,11 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly))
             .AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<ICarService, CarService>()
+            .AddScoped<ICarBrandService, CarBrandService>()
+            .AddScoped<ICarBodyTypeService, CarBodyTypeService>()
+            .AddScoped<ICarClassService, CarClassService>();
 
         return services;
     }

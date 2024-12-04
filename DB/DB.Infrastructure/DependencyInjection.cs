@@ -18,7 +18,10 @@ public static class DependencyInjection
                     opt => opt.EnableRetryOnFailure()),
                     ServiceLifetime.Scoped);
 
-        services.AddScoped<IRepository<Car>, CarRepository>();
+        services.AddScoped<IRepository<Car>, CarRepository>()
+            .AddScoped<IRepository<CarBodyType>, CarBodyTypeRepository>()
+            .AddScoped<IRepository<CarBrand>, CarBrandRepository>()
+            .AddScoped<IRepository<CarClass>, CarClassRepository>();
 
         return services;
     }

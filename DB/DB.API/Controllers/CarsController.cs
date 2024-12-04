@@ -1,11 +1,9 @@
-﻿using DB.Application.UseCases.Cars.GetById;
-using DB.Application.UseCases.Cars.ListCars;
+﻿using DB.Application.UseCases.Cars;
+using DB.Application.UseCases.Cars.DTO;
+using DB.Domain.Entities;
 using MediatR;
-using DB.Application.UseCases.Cars.AddCar;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DB.Application.UseCases.Cars.UpdateCar;
-using DB.Application.UseCases.Cars.DeleteCar;
 
 namespace DB.API.Controllers;
 
@@ -13,50 +11,50 @@ namespace DB.API.Controllers;
 [ApiController]
 public class CarsController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly ICarService _carService;
 
-    public CarsController(IMediator mediator)
+    public CarsController(ICarService carService)
     {
-        _mediator = mediator;
+        _carService = carService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllCars()
+    public IActionResult GetAllCars()
     {
-        var cars = await _mediator.Send(new ListCarsRequest());
+        var cars = _carService.GetAll();
 
         return Ok(cars);
     }
 
     [HttpGet]
     [Route("id")]
-    public async Task<IActionResult> GetById([FromQuery] GetCarByIdRequest request)
+    public IActionResult GetById([FromQuery] int id)
     {
-        var car = await _mediator.Send(request);
+        var car = _carService.GetById(id);
 
         return Ok(car);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] AddCarRequest request)
+    public ActionResult Add([FromBody] AddCarDTO car)
     {
-        await _mediator.Send(request);
+        _carService.Add(car);
 
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateCarRequest request)
+    public IActionResult Update([FromBody] UpdateCarDTO car)
     {
-        await _mediator.Send(request);
+        _carService.Update(car);
 
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromQuery] DeleteCarRequest request)
+    public async Task<IActionResult> Delete([FromQuery] int id)
     {
-        await _mediator.Send(request);
+        _carService.Delete(id);
 
         return Ok();
     }

@@ -5,14 +5,17 @@ CREATE TABLE Roles (
     role ENUM('visitor', 'admin', 'employee') NOT NULL
 );
 
+-- select * from Users;
+
 CREATE TABLE Users (
-    id CHAR(36) PRIMARY KEY,
+    id VARCHAR(36) NOT NULL DEFAULT (UUID()),
     username VARCHAR(15) NOT NULL,
     email VARCHAR(40) NOT NULL,
     password_hash VARCHAR(64) NOT NULL,
     role_id INT,
     FOREIGN KEY (role_id) REFERENCES Roles(id)
-    ON DELETE SET NULL
+    ON DELETE SET NULL,
+    UNIQUE (id)
 );
 
 CREATE TABLE Logs (
@@ -25,7 +28,7 @@ CREATE TABLE Logs (
 
 CREATE TABLE Employees (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id CHAR(36),
+    user_id VARCHAR(36),
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     phone_number VARCHAR(12),
@@ -74,7 +77,7 @@ CREATE TABLE Orders (
     end DATETIME NOT NULL,
     price FLOAT(10, 2) NOT NULL CHECK (price >= 0),
     closed BOOLEAN NOT NULL,
-    user_id CHAR(36),
+    user_id VARCHAR(36),
     FOREIGN KEY (user_id) REFERENCES Users(id)
     ON DELETE CASCADE
 );

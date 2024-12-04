@@ -1,4 +1,5 @@
-﻿using DB.Application.Exceptions;
+﻿using AutoMapper;
+using DB.Application.Exceptions;
 using DB.Application.UseCases.Users.DTO;
 using DB.Domain.Abstractions;
 using DB.Domain.Entities;
@@ -9,16 +10,18 @@ internal class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, ITokenService tokenService)
+    public UserService(IUserRepository userRepository, ITokenService tokenService, IMapper mapper)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;
+        _mapper = mapper;
     }
 
     public async Task<string> LoginAsync(LoginDTO userDto)
     {
-        var user = await _userRepository.Login(userDto.Email, userDto.Password);
+        var user = await _userRepository.LoginAsync(userDto.Email, userDto.Password);
 
         if (user is null)
         {
@@ -28,6 +31,13 @@ internal class UserService : IUserService
         var token = _tokenService.GetToken(user.Email, user.Id, user.RoleId.Value);
 
         return token;
+    }
+
+    public async Task RegisterAsync(RegisterDTO userDto)
+    {
+        var user = _mapper.Map<User>(userDto);
+
+        await _userRepository.RegisterAsync(user, userDto.Password);
     }
 
     public async Task<List<User>> GetAllUsersAsync()

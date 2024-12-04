@@ -26,6 +26,15 @@ public class UsersController : ControllerBase
         return Ok(token);
     }
 
+    [HttpPost]
+    [Route("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDTO user)
+    {
+        await _userService.RegisterAsync(user);
+
+        return Ok();
+    }
+
     [HttpGet]
     [Route("user")]
     [Authorize]
@@ -36,11 +45,11 @@ public class UsersController : ControllerBase
         var user = await _userService.GetByIdAsync(id);
 
         return Ok(user);
-	}
+    }
 
     [HttpGet]
-	[Authorize(Policy = "Employee")]
-	public async Task<IActionResult> GetAllUsers()
+    [Authorize(Policy = "Employee")]
+    public async Task<IActionResult> GetAllUsers()
     {
         var users = await _userService.GetAllUsersAsync();
 

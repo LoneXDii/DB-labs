@@ -1,1 +1,2 @@
-CREATE DATABASE carrentdb
+CREATE DATABASE carrentdb;
+use carrentdb;

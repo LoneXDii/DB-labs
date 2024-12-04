@@ -29,4 +29,23 @@ internal class UserService : IUserService
 
         return token;
     }
+
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        var users = await _userRepository.GetAllUsersAsync();
+
+        return users;
+    }
+
+    public async Task<User> GetByIdAsync(string id)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+
+        if(user is null)
+        {
+            throw new BadRequestException("No such user");
+        }
+
+        return user;
+    }
 }

@@ -27,6 +27,27 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Route("user")]
+    [Authorize]
+    public async Task<IActionResult> GetUserInfo()
+    {
+        var id = HttpContext.User.FindFirst("Id")?.Value;
+
+        var user = await _userService.GetByIdAsync(id);
+
+        return Ok(user);
+	}
+
+    [HttpGet]
+	[Authorize(Policy = "Employee")]
+	public async Task<IActionResult> GetAllUsers()
+    {
+        var users = await _userService.GetAllUsersAsync();
+
+        return Ok(users);
+    }
+
+    [HttpGet]
     [Route("base")]
     [Authorize]
     public IActionResult TestBase() {

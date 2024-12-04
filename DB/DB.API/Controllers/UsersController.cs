@@ -56,7 +56,17 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
 
-    [HttpGet]
+    [HttpPost]
+    [Route("role")]
+	[Authorize(Policy = "Admin")]
+    public async Task<IActionResult> AssignToRole([FromBody] ChangeRoleDTO role)
+    {
+        await _userService.AssingToRoleAsync(role);
+
+        return Ok();
+    }
+
+	[HttpGet]
     [Route("base")]
     [Authorize]
     public IActionResult TestBase() {

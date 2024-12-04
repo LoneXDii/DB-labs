@@ -58,4 +58,9 @@ internal class UserService : IUserService
 
         return user;
     }
+
+    public async Task AssingToRoleAsync(ChangeRoleDTO dto)
+    {
+        await _userRepository.AssignToRoleAsync(dto.UserId, dto.RoleId);
+    }
 }

@@ -9,4 +9,5 @@ public interface IUserService
     Task RegisterAsync(RegisterDTO user);
     Task<List<User>> GetAllUsersAsync();
     Task<User> GetByIdAsync(string id);
+    Task AssingToRoleAsync(ChangeRoleDTO dto);
 }

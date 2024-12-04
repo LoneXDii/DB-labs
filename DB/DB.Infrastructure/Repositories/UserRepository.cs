@@ -1,6 +1,5 @@
 ﻿using DB.Domain.Abstractions;
 using DB.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SupportService.Infrastructure.Data;
 
@@ -49,5 +48,13 @@ internal class UserRepository : IUserRepository
             .FirstOrDefaultAsync();
 
         return user;
+    }
+
+    public async Task AssignToRoleAsync(string userId, int roleId)
+    {
+        await _dbContext.Database.ExecuteSqlRawAsync(@"
+            UPDATE Users
+            SET role_id = {0}
+            WHERE id = {1}", roleId, userId);
     }
 }

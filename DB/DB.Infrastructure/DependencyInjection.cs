@@ -53,7 +53,8 @@ public static class DependencyInjection
             .AddScoped<IRepository<CarBodyType>, CarBodyTypeRepository>()
             .AddScoped<IRepository<CarBrand>, CarBrandRepository>()
             .AddScoped<IRepository<CarClass>, CarClassRepository>()
-            .AddScoped<IRepository<Log>, LogsRepository>();
+            .AddScoped<IRepository<Log>, LogsRepository>()
+            .AddScoped<IRepository<Order>, OrderRepository>();
 
         return services;
     }

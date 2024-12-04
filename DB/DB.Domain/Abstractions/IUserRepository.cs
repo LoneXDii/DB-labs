@@ -8,4 +8,5 @@ public interface IUserRepository
     Task RegisterAsync(User user, string password);
     Task<List<User>> GetAllUsersAsync();
     Task<User?> GetByIdAsync(string id);
+    Task AssignToRoleAsync(string userId, int roleId);
 }

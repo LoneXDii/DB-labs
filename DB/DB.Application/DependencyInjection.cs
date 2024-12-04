@@ -3,6 +3,7 @@ using DB.Application.UseCases.Brands;
 using DB.Application.UseCases.Cars;
 using DB.Application.UseCases.Classes;
 using DB.Application.UseCases.Logs;
+using DB.Application.UseCases.Orders;
 using DB.Application.UseCases.Users;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -21,7 +22,8 @@ public static class DependencyInjection
             .AddScoped<ICarBodyTypeService, CarBodyTypeService>()
             .AddScoped<ICarClassService, CarClassService>()
             .AddScoped<ILogService, LogService>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IOrderService, OrderService>();
 
         return services;
     }

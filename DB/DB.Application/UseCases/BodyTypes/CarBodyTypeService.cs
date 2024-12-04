@@ -34,14 +34,14 @@ internal class CarBodyTypeService : ICarBodyTypeService
     {
         var efBodyType = _mapper.Map<CarBodyType>(bodyType);
 
-		await _repository.AddAsync(efBodyType);
+        await _repository.AddAsync(efBodyType);
     }
 
     public async Task UpdateAsync(UpdateCarBodyTypeDTO bodyType)
     {
         var efBodyType = _mapper.Map<CarBodyType>(bodyType);
 
-		await _repository.UpdateAsync(efBodyType);
+        await _repository.UpdateAsync(efBodyType);
     }
 
     public async Task DeleteAsync(int id)

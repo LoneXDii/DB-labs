@@ -35,18 +35,18 @@ internal class CarClassRepository : IRepository<CarClass>
     public async Task AddAsync(CarClass entity)
     {
         var sql = "INSERT INTO Car_classes (name, exp_required) VALUES ({0}, {1})";
-		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired);
     }
 
     public async Task UpdateAsync(CarClass entity)
     {
         var sql = "UPDATE Car_classes SET name = {0}, exp_required = {1} WHERE id = {2}";
-		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired, entity.Id);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired, entity.Id);
     }
 
     public async Task DeleteAsync(int id)
     {
         var sql = "DELETE FROM Car_classes WHERE id = {0}";
-		await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
 }

@@ -11,4 +11,5 @@ internal class AppDbContext : DbContext
     public DbSet<CarBrand> CarBrands { get; set; }
     public DbSet<CarClass> CarClasses { get; set; }
     public DbSet<CarBodyType> CarBodyTypes { get; set; }
+    public DbSet<Log> Logs { get; set; }
 }

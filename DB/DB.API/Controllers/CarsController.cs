@@ -38,7 +38,7 @@ public class CarsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] AddCarDTO car)
     {
-		await _carService.AddAsync(car);
+        await _carService.AddAsync(car);
 
         return Ok();
     }
@@ -46,7 +46,7 @@ public class CarsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCarDTO car)
     {
-		await _carService.UpdateAsync(car);
+        await _carService.UpdateAsync(car);
 
         return Ok();
     }

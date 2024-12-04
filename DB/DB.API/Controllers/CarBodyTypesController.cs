@@ -36,7 +36,7 @@ public class CarBodyTypesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] AddCarBodyTypeDTO bodyType)
     {
-		await _carBodyTypeService.AddAsync(bodyType);
+        await _carBodyTypeService.AddAsync(bodyType);
 
         return Ok();
     }
@@ -44,7 +44,7 @@ public class CarBodyTypesController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCarBodyTypeDTO bodyType)
     {
-		await _carBodyTypeService.UpdateAsync(bodyType);
+        await _carBodyTypeService.UpdateAsync(bodyType);
 
         return Ok();
     }

@@ -35,13 +35,13 @@ internal class CarBrandRepository : IRepository<CarBrand>
     public async Task AddAsync(CarBrand entity)
     {
         var sql = "INSERT INTO Car_brands (name) VALUES ({0})";
-		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name);
     }
 
     public async Task UpdateAsync(CarBrand entity)
     {
         var sql = "UPDATE Car_brands SET name = {0} WHERE id = {1}";
-		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.Id);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.Id);
     }
 
     public async Task DeleteAsync(int id)

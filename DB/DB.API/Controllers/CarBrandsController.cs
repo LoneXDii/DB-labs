@@ -44,7 +44,7 @@ public class CarBrandsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCarBrandDTO brand)
     {
-		await _brandService.UpdateAsync(brand);
+        await _brandService.UpdateAsync(brand);
 
         return Ok();
     }

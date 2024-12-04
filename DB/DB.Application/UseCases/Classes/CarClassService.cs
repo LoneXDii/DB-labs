@@ -34,14 +34,14 @@ internal class CarClassService : ICarClassService
     {
         var efCarClass = _mapper.Map<CarClass>(carClass);
 
-		await _repository.AddAsync(efCarClass);
+        await _repository.AddAsync(efCarClass);
     }
 
     public async Task UpdateAsync(UpdateCarClassDTO carClass)
     {
         var efCarClass = _mapper.Map<CarClass>(carClass);
 
-		await _repository.UpdateAsync(efCarClass);
+        await _repository.UpdateAsync(efCarClass);
     }
 
     public async Task DeleteAsync(int id)

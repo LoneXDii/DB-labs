@@ -34,18 +34,18 @@ internal class CarBrandService : ICarBrandService
     {
         var efBrand = _mapper.Map<CarBrand>(car);
 
-		await _repository.AddAsync(efBrand);
+        await _repository.AddAsync(efBrand);
     }
 
     public async Task UpdateAsync(UpdateCarBrandDTO car)
     {
         var efBrand = _mapper.Map<CarBrand>(car);
 
-		await _repository.UpdateAsync(efBrand);
+        await _repository.UpdateAsync(efBrand);
     }
 
     public async Task DeleteAsync(int id)
     {
-		await _repository.DeleteAsync(id);
+        await _repository.DeleteAsync(id);
     }
 }

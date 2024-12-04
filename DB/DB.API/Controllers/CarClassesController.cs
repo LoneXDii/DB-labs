@@ -36,7 +36,7 @@ public class CarClassesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] AddCarClassDTO carClass)
     {
-		await _carClassService.AddAsync(carClass);
+        await _carClassService.AddAsync(carClass);
 
         return Ok();
     }
@@ -44,7 +44,7 @@ public class CarClassesController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCarClassDTO carClass)
     {
-		await _carClassService.UpdateAsync(carClass);
+        await _carClassService.UpdateAsync(carClass);
 
         return Ok();
     }
@@ -52,7 +52,7 @@ public class CarClassesController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
-		await _carClassService.DeleteAsync(id);
+        await _carClassService.DeleteAsync(id);
 
         return Ok();
     }

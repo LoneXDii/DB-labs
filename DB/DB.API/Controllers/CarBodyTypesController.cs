@@ -2,6 +2,7 @@
 using DB.Application.UseCases.BodyTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DB.API.Controllers;
 
@@ -34,6 +35,7 @@ public class CarBodyTypesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Add([FromBody] AddCarBodyTypeDTO bodyType)
     {
         await _carBodyTypeService.AddAsync(bodyType);
@@ -42,6 +44,7 @@ public class CarBodyTypesController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Update([FromBody] UpdateCarBodyTypeDTO bodyType)
     {
         await _carBodyTypeService.UpdateAsync(bodyType);
@@ -50,6 +53,7 @@ public class CarBodyTypesController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
         await _carBodyTypeService.DeleteAsync(id);

@@ -2,6 +2,7 @@
 using DB.Application.UseCases.Classes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DB.API.Controllers;
 
@@ -34,6 +35,7 @@ public class CarClassesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Add([FromBody] AddCarClassDTO carClass)
     {
         await _carClassService.AddAsync(carClass);
@@ -42,6 +44,7 @@ public class CarClassesController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Update([FromBody] UpdateCarClassDTO carClass)
     {
         await _carClassService.UpdateAsync(carClass);
@@ -50,6 +53,7 @@ public class CarClassesController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
         await _carClassService.DeleteAsync(id);

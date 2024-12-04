@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DB.Application.UseCases.Brands;
 using DB.Application.UseCases.Brands.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DB.API.Controllers;
 
@@ -34,6 +35,7 @@ public class CarBrandsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Add([FromBody] AddCarBrandDTO brand)
     {
         await _brandService.AddAsync(brand);
@@ -42,6 +44,7 @@ public class CarBrandsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Update([FromBody] UpdateCarBrandDTO brand)
     {
         await _brandService.UpdateAsync(brand);
@@ -50,6 +53,7 @@ public class CarBrandsController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
         await _brandService.DeleteAsync(id);

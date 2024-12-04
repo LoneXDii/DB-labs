@@ -1,4 +1,5 @@
 ﻿using DB.Application.UseCases.Logs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ public class LogsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> GetAll()
     {
         var logs = await _logService.GetAllAsync();

@@ -2,6 +2,7 @@
 using DB.Application.UseCases.Cars.DTO;
 using DB.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,7 @@ public class CarsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Add([FromBody] AddCarDTO car)
     {
         await _carService.AddAsync(car);
@@ -44,6 +46,7 @@ public class CarsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Update([FromBody] UpdateCarDTO car)
     {
         await _carService.UpdateAsync(car);
@@ -52,6 +55,7 @@ public class CarsController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
         await _carService.DeleteAsync(id);

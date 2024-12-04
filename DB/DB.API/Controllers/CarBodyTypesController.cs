@@ -17,38 +17,43 @@ public class CarBodyTypesController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var bodyTypes = _carBodyTypeService.GetAll();
+        var bodyTypes = await _carBodyTypeService.GetAllAsync();
+
         return Ok(bodyTypes);
     }
 
     [HttpGet]
     [Route("id")]
-    public IActionResult GetById([FromQuery] int id)
+    public async Task<IActionResult> GetById([FromQuery] int id)
     {
-        var bodyType = _carBodyTypeService.GetById(id);
+        var bodyType = await _carBodyTypeService.GetByIdAsync(id);
+
         return Ok(bodyType);
     }
 
     [HttpPost]
-    public ActionResult Add([FromBody] AddCarBodyTypeDTO bodyType)
+    public async Task<IActionResult> Add([FromBody] AddCarBodyTypeDTO bodyType)
     {
-        _carBodyTypeService.Add(bodyType);
+		await _carBodyTypeService.AddAsync(bodyType);
+
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult Update([FromBody] UpdateCarBodyTypeDTO bodyType)
+    public async Task<IActionResult> Update([FromBody] UpdateCarBodyTypeDTO bodyType)
     {
-        _carBodyTypeService.Update(bodyType);
+		await _carBodyTypeService.UpdateAsync(bodyType);
+
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult Delete([FromQuery] int id)
+    public async Task<IActionResult> Delete([FromQuery] int id)
     {
-        _carBodyTypeService.Delete(id);
+        await _carBodyTypeService.DeleteAsync(id);
+
         return Ok();
     }
 }

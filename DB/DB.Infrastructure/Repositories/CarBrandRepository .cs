@@ -14,39 +14,39 @@ internal class CarBrandRepository : IRepository<CarBrand>
         _dbContext = dbContext;
     }
 
-    public List<CarBrand> GetAll()
+    public async Task<List<CarBrand>> GetAllAsync()
     {
-        var brands = _dbContext.CarBrands
+        var brands = await _dbContext.CarBrands
             .FromSqlRaw("SELECT id AS Id, name AS Name FROM Car_brands ORDER BY id;")
-            .ToList();
+            .ToListAsync();
 
         return brands;
     }
 
-    public CarBrand GetById(int id)
+    public async Task<CarBrand> GetByIdAsync(int id)
     {
-        var brand = _dbContext.CarBrands
+        var brand = await _dbContext.CarBrands
             .FromSqlRaw("SELECT id AS Id, name AS Name FROM Car_brands WHERE id = {0}", id)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
         return brand;
     }
 
-    public void Add(CarBrand entity)
+    public async Task AddAsync(CarBrand entity)
     {
         var sql = "INSERT INTO Car_brands (name) VALUES ({0})";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name);
     }
 
-    public void Update(CarBrand entity)
+    public async Task UpdateAsync(CarBrand entity)
     {
         var sql = "UPDATE Car_brands SET name = {0} WHERE id = {1}";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name, entity.Id);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.Id);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         var sql = "DELETE FROM Car_brands WHERE id = {0}";
-        _dbContext.Database.ExecuteSqlRaw(sql, id);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
 }

@@ -16,36 +16,36 @@ internal class CarBrandService : ICarBrandService
         _mapper = mapper;
     }
 
-    public List<CarBrand> GetAll()
+    public async Task<List<CarBrand>> GetAllAsync()
     {
-        var brands = _repository.GetAll();
+        var brands = await _repository.GetAllAsync();
 
         return brands;
     }
 
-    public CarBrand GetById(int id)
+    public async Task<CarBrand> GetByIdAsync(int id)
     {
-        var brand = _repository.GetById(id);
+        var brand = await _repository.GetByIdAsync(id);
 
         return brand;
     }
 
-    public void Add(AddCarBrandDTO car)
+    public async Task AddAsync(AddCarBrandDTO car)
     {
         var efBrand = _mapper.Map<CarBrand>(car);
 
-        _repository.Add(efBrand);
+		await _repository.AddAsync(efBrand);
     }
 
-    public void Update(UpdateCarBrandDTO car)
+    public async Task UpdateAsync(UpdateCarBrandDTO car)
     {
         var efBrand = _mapper.Map<CarBrand>(car);
 
-        _repository.Update(efBrand);
+		await _repository.UpdateAsync(efBrand);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        _repository.Delete(id);
+		await _repository.DeleteAsync(id);
     }
 }

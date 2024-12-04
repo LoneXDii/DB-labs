@@ -14,39 +14,39 @@ internal class CarClassRepository : IRepository<CarClass>
         _dbContext = dbContext;
     }
 
-    public List<CarClass> GetAll()
+    public async Task<List<CarClass>> GetAllAsync()
     {
-        var carClasses = _dbContext.CarClasses
+        var carClasses = await _dbContext.CarClasses
             .FromSqlRaw("SELECT id AS Id, name AS Name, exp_required AS ExpRequired FROM Car_classes ORDER BY id;")
-            .ToList();
+            .ToListAsync();
 
         return carClasses;
     }
 
-    public CarClass GetById(int id)
+    public async Task<CarClass> GetByIdAsync(int id)
     {
-        var carClass = _dbContext.CarClasses
+        var carClass = await _dbContext.CarClasses
             .FromSqlRaw("SELECT id AS Id, name AS Name, exp_required AS ExpRequired FROM Car_classes WHERE id = {0}", id)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
         return carClass;
     }
 
-    public void Add(CarClass entity)
+    public async Task AddAsync(CarClass entity)
     {
         var sql = "INSERT INTO Car_classes (name, exp_required) VALUES ({0}, {1})";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name, entity.ExpRequired);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired);
     }
 
-    public void Update(CarClass entity)
+    public async Task UpdateAsync(CarClass entity)
     {
         var sql = "UPDATE Car_classes SET name = {0}, exp_required = {1} WHERE id = {2}";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name, entity.ExpRequired, entity.Id);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.ExpRequired, entity.Id);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         var sql = "DELETE FROM Car_classes WHERE id = {0}";
-        _dbContext.Database.ExecuteSqlRaw(sql, id);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
 }

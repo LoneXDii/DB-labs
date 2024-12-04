@@ -5,9 +5,9 @@ namespace DB.Application.UseCases.BodyTypes;
 
 public interface ICarBodyTypeService
 {
-    List<CarBodyType> GetAll();
-    CarBodyType GetById(int id);
-    void Add(AddCarBodyTypeDTO bodyType);
-    void Update(UpdateCarBodyTypeDTO bodyType);
-    void Delete(int id);
+	Task<List<CarBodyType>> GetAllAsync();
+	Task<CarBodyType> GetByIdAsync(int id);
+	Task AddAsync(AddCarBodyTypeDTO bodyType);
+	Task UpdateAsync(UpdateCarBodyTypeDTO bodyType);
+    Task DeleteAsync(int id);
 }

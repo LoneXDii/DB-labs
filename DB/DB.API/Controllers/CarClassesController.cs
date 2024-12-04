@@ -17,38 +17,43 @@ public class CarClassesController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var carClasses = _carClassService.GetAll();
+        var carClasses = await _carClassService.GetAllAsync();
+
         return Ok(carClasses);
     }
 
     [HttpGet]
     [Route("id")]
-    public IActionResult GetById([FromQuery] int id)
+    public async Task<IActionResult> GetById([FromQuery] int id)
     {
-        var carClass = _carClassService.GetById(id);
+        var carClass = await _carClassService.GetByIdAsync(id);
+
         return Ok(carClass);
     }
 
     [HttpPost]
-    public ActionResult Add([FromBody] AddCarClassDTO carClass)
+    public async Task<IActionResult> Add([FromBody] AddCarClassDTO carClass)
     {
-        _carClassService.Add(carClass);
+		await _carClassService.AddAsync(carClass);
+
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult Update([FromBody] UpdateCarClassDTO carClass)
+    public async Task<IActionResult> Update([FromBody] UpdateCarClassDTO carClass)
     {
-        _carClassService.Update(carClass);
+		await _carClassService.UpdateAsync(carClass);
+
         return Ok();
     }
 
     [HttpDelete]
-    public IActionResult Delete([FromQuery] int id)
+    public async Task<IActionResult> Delete([FromQuery] int id)
     {
-        _carClassService.Delete(id);
+		await _carClassService.DeleteAsync(id);
+
         return Ok();
     }
 }

@@ -14,39 +14,39 @@ internal class CarBodyTypeRepository : IRepository<CarBodyType>
         _dbContext = dbContext;
     }
 
-    public List<CarBodyType> GetAll()
+    public async Task<List<CarBodyType>> GetAllAsync()
     {
-        var bodyTypes = _dbContext.CarBodyTypes
+        var bodyTypes = await _dbContext.CarBodyTypes
             .FromSqlRaw("SELECT id AS Id, name AS Name FROM Car_bodytypes ORDER BY id;")
-            .ToList();
+            .ToListAsync();
 
         return bodyTypes;
     }
 
-    public CarBodyType GetById(int id)
+    public async Task<CarBodyType> GetByIdAsync(int id)
     {
-        var bodyType = _dbContext.CarBodyTypes
+        var bodyType = await _dbContext.CarBodyTypes
             .FromSqlRaw("SELECT id AS Id, name AS Name FROM Car_bodytypes WHERE id = {0}", id)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
         return bodyType;
     }
 
-    public void Add(CarBodyType entity)
+    public async Task AddAsync(CarBodyType entity)
     {
         var sql = "INSERT INTO Car_bodytypes (name) VALUES ({0})";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name);
     }
 
-    public void Update(CarBodyType entity)
+    public async Task UpdateAsync(CarBodyType entity)
     {
         var sql = "UPDATE Car_bodytypes SET name = {0} WHERE id = {1}";
-        _dbContext.Database.ExecuteSqlRaw(sql, entity.Name, entity.Id);
+		await _dbContext.Database.ExecuteSqlRawAsync(sql, entity.Name, entity.Id);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         var sql = "DELETE FROM Car_bodytypes WHERE id = {0}";
-        _dbContext.Database.ExecuteSqlRaw(sql, id);
+        await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
 }

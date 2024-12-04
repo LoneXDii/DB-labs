@@ -16,32 +16,36 @@ internal class CarBodyTypeService : ICarBodyTypeService
         _mapper = mapper;
     }
 
-    public List<CarBodyType> GetAll()
+    public async Task<List<CarBodyType>> GetAllAsync()
     {
-        var bodyTypes = _repository.GetAll();
+        var bodyTypes = await _repository.GetAllAsync();
+
         return bodyTypes;
     }
 
-    public CarBodyType GetById(int id)
+    public async Task<CarBodyType> GetByIdAsync(int id)
     {
-        var bodyType = _repository.GetById(id);
+        var bodyType = await _repository.GetByIdAsync(id);
+
         return bodyType;
     }
 
-    public void Add(AddCarBodyTypeDTO bodyType)
+    public async Task AddAsync(AddCarBodyTypeDTO bodyType)
     {
         var efBodyType = _mapper.Map<CarBodyType>(bodyType);
-        _repository.Add(efBodyType);
+
+		await _repository.AddAsync(efBodyType);
     }
 
-    public void Update(UpdateCarBodyTypeDTO bodyType)
+    public async Task UpdateAsync(UpdateCarBodyTypeDTO bodyType)
     {
         var efBodyType = _mapper.Map<CarBodyType>(bodyType);
-        _repository.Update(efBodyType);
+
+		await _repository.UpdateAsync(efBodyType);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        _repository.Delete(id);
+        await _repository.DeleteAsync(id);
     }
 }

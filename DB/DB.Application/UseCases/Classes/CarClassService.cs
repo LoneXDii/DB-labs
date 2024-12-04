@@ -16,32 +16,36 @@ internal class CarClassService : ICarClassService
         _mapper = mapper;
     }
 
-    public List<CarClass> GetAll()
+    public async Task<List<CarClass>> GetAllAsync()
     {
-        var carClasses = _repository.GetAll();
+        var carClasses = await _repository.GetAllAsync();
+
         return carClasses;
     }
 
-    public CarClass GetById(int id)
+    public async Task<CarClass> GetByIdAsync(int id)
     {
-        var carClass = _repository.GetById(id);
+        var carClass = await _repository.GetByIdAsync(id);
+
         return carClass;
     }
 
-    public void Add(AddCarClassDTO carClass)
+    public async Task AddAsync(AddCarClassDTO carClass)
     {
         var efCarClass = _mapper.Map<CarClass>(carClass);
-        _repository.Add(efCarClass);
+
+		await _repository.AddAsync(efCarClass);
     }
 
-    public void Update(UpdateCarClassDTO carClass)
+    public async Task UpdateAsync(UpdateCarClassDTO carClass)
     {
         var efCarClass = _mapper.Map<CarClass>(carClass);
-        _repository.Update(efCarClass);
+
+		await _repository.UpdateAsync(efCarClass);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        _repository.Delete(id);
+        await _repository.DeleteAsync(id);
     }
 }

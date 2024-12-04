@@ -5,9 +5,9 @@ namespace DB.Application.UseCases.Brands;
 
 public interface ICarBrandService
 {
-    List<CarBrand> GetAll();
-    CarBrand GetById(int id);
-    void Add(AddCarBrandDTO car);
-    void Update(UpdateCarBrandDTO car);
-    void Delete(int id);
+	Task<List<CarBrand>> GetAllAsync();
+	Task<CarBrand> GetByIdAsync(int id);
+	Task AddAsync(AddCarBrandDTO car);
+	Task UpdateAsync(UpdateCarBrandDTO car);
+    Task DeleteAsync(int id);
 }

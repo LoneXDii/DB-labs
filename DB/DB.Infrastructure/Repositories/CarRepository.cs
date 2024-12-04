@@ -14,9 +14,9 @@ internal class CarRepository : IRepository<Car>
         _dbContext = dbContext;
     }
 
-    public List<Car> GetAll()
+    public async Task<List<Car>> GetAllAsync()
     {
-        var cars = _dbContext.Cars
+        var cars = await _dbContext.Cars
             .FromSqlRaw(@"
             SELECT c.id AS Id,
                c.model AS Model,
@@ -35,14 +35,14 @@ internal class CarRepository : IRepository<Car>
             JOIN Car_classes cl ON c.class_id = cl.id
             JOIN Car_bodytypes bt ON c.bodytype_id = bt.id
             ORDER BY c.id;")
-            .ToList(); 
+            .ToListAsync(); 
 
         return cars; 
     }
 
-    public Car GetById(int id)
+    public async Task<Car> GetByIdAsync(int id)
     {
-        var car = _dbContext.Cars
+        var car = await _dbContext.Cars
         .FromSqlRaw(@"
             SELECT c.id AS Id,
                    c.model AS Model,
@@ -61,18 +61,18 @@ internal class CarRepository : IRepository<Car>
             JOIN Car_classes cl ON c.class_id = cl.id
             JOIN Car_bodytypes bt ON c.bodytype_id = bt.id
             WHERE c.id = {0}", id)
-        .FirstOrDefault();
+        .FirstOrDefaultAsync();
 
         return car;
     }
 
-    public void Add(Car entity)
+    public async Task AddAsync(Car entity)
     {
         var sql = @"
         INSERT INTO Cars (model, registration_number, price, rent_price, manufacture_year, brand_id, class_id, bodytype_id)
         VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})";
 
-        _dbContext.Database.ExecuteSqlRaw(sql,
+        await _dbContext.Database.ExecuteSqlRawAsync(sql,
             entity.Model,
             entity.RegistrationNumber,
             entity.Price,
@@ -83,7 +83,7 @@ internal class CarRepository : IRepository<Car>
             entity.BodytypeId);
     }
 
-    public void Update(Car entity)
+    public async Task UpdateAsync(Car entity)
     {
         var sql = @"
         UPDATE Cars
@@ -97,7 +97,7 @@ internal class CarRepository : IRepository<Car>
             bodytype_id = {7}
         WHERE id = {8}";
 
-        var affectedRows = _dbContext.Database.ExecuteSqlRaw(sql,
+        var affectedRows = await _dbContext.Database.ExecuteSqlRawAsync(sql,
             entity.Model,
             entity.RegistrationNumber,
             entity.Price,
@@ -109,10 +109,10 @@ internal class CarRepository : IRepository<Car>
             entity.Id);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         var sql = "DELETE FROM Cars WHERE id = {0}";
 
-        var affectedRows = _dbContext.Database.ExecuteSqlRaw(sql, id);
+        var affectedRows = await _dbContext.Database.ExecuteSqlRawAsync(sql, id);
     }
 }

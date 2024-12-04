@@ -6,9 +6,9 @@ namespace DB.Application.UseCases.Cars;
 
 public interface ICarService
 {
-    List<Car> GetAll();
-    Car GetById(int id);
-    void Add(AddCarDTO car);
-    void Update(UpdateCarDTO car);
-    void Delete(int id);
+	Task<List<Car>> GetAllAsync();
+	Task<Car> GetByIdAsync(int id);
+	Task AddAsync(AddCarDTO car);
+	Task UpdateAsync(UpdateCarDTO car);
+    Task DeleteAsync(int id);
 }

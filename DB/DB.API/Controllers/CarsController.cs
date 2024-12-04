@@ -19,34 +19,34 @@ public class CarsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAllCars()
+    public async Task<IActionResult> GetAllCars()
     {
-        var cars = _carService.GetAll();
+        var cars = await _carService.GetAllAsync();
 
         return Ok(cars);
     }
 
     [HttpGet]
     [Route("id")]
-    public IActionResult GetById([FromQuery] int id)
+    public async Task<IActionResult> GetById([FromQuery] int id)
     {
-        var car = _carService.GetById(id);
+        var car = await _carService.GetByIdAsync(id);
 
         return Ok(car);
     }
 
     [HttpPost]
-    public ActionResult Add([FromBody] AddCarDTO car)
+    public async Task<IActionResult> Add([FromBody] AddCarDTO car)
     {
-        _carService.Add(car);
+		await _carService.AddAsync(car);
 
         return Ok();
     }
 
     [HttpPut]
-    public IActionResult Update([FromBody] UpdateCarDTO car)
+    public async Task<IActionResult> Update([FromBody] UpdateCarDTO car)
     {
-        _carService.Update(car);
+		await _carService.UpdateAsync(car);
 
         return Ok();
     }
@@ -54,7 +54,7 @@ public class CarsController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {
-        _carService.Delete(id);
+        await _carService.DeleteAsync(id);
 
         return Ok();
     }

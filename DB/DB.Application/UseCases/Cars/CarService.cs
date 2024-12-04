@@ -49,4 +49,25 @@ internal class CarService : ICarService
     {
         await _repository.DeleteAsync(id);
     }
+
+	public async Task<List<Car>> GetByBrandAsync(int brandId)
+	{
+        var cars = await _repository.FilterByNumberAsync("brand_id", brandId);
+
+        return cars;
+	}
+
+	public async Task<List<Car>> GetByClassAsync(int classId)
+	{
+		var cars = await _repository.FilterByNumberAsync("class_id", classId);
+
+		return cars;
+	}
+
+	public async Task<List<Car>> GetByBodyTypeAsync(int bodyTypeId)
+	{
+		var cars = await _repository.FilterByNumberAsync("bodytype_id", bodyTypeId);
+
+		return cars;
+	}
 }

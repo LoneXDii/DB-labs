@@ -36,7 +36,34 @@ public class CarsController : ControllerBase
         return Ok(car);
     }
 
-    [HttpPost]
+	[HttpGet]
+	[Route("brand")]
+	public async Task<IActionResult> GetByBrand([FromQuery] int id)
+	{
+		var car = await _carService.GetByBrandAsync(id);
+
+		return Ok(car);
+	}
+
+	[HttpGet]
+	[Route("class")]
+	public async Task<IActionResult> GetByClass([FromQuery] int id)
+	{
+		var car = await _carService.GetByClassAsync(id);
+
+		return Ok(car);
+	}
+
+	[HttpGet]
+	[Route("bodytype")]
+	public async Task<IActionResult> GetByBodyType([FromQuery] int id)
+	{
+		var car = await _carService.GetByBodyTypeAsync(id);
+
+		return Ok(car);
+	}
+
+	[HttpPost]
     [Authorize(Policy = "Admin")]
     public async Task<IActionResult> Add([FromBody] AddCarDTO car)
     {

@@ -55,6 +55,14 @@ BEGIN
 END;
 //
 
+CREATE TRIGGER before_order_insert
+BEFORE INSERT ON Orders
+FOR EACH ROW
+BEGIN
+    SET NEW.price = 0;
+END;
+//
+
 -- Триггеры для логов
 CREATE TRIGGER log_users_insert
 AFTER INSERT ON users

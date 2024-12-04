@@ -54,20 +54,28 @@ FROM users
 GROUP BY users.id
 ORDER BY users.role_id, rank_within_role;
 
--- Список пользователей, у которых есть заказы на сумму больше 400
+-- Список пользователей, у которых есть заказы на сумму больше 300
 SELECT username, email
 FROM users
 WHERE EXISTS (
     SELECT 1
     FROM orders
-    WHERE orders.user_id = users.id AND orders.price > 400
+    WHERE orders.user_id = users.id AND orders.price > 350
 );
 
 -- Список заказов с присвоением им категории по их сумме
 SELECT orders.id, orders.price,
        CASE 
-           WHEN orders.price < 200 THEN 'Low'
-           WHEN orders.price BETWEEN 200 AND 500 THEN 'Medium'
+           WHEN orders.price < 350 THEN 'Low'
+           WHEN orders.price BETWEEN 350 AND 400 THEN 'Medium'
            ELSE 'High'
        END AS price_category
 FROM orders;
+
+SELECT users.email, cars.model AS car_model
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id
+LEFT JOIN cars_orders ON orders.id = cars_orders.order_id
+LEFT JOIN cars ON cars_orders.car_id = cars.id
+WHERE cars.model IS NOT NULL
+ORDER BY users.email;

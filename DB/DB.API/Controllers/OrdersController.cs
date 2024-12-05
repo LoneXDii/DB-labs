@@ -1,4 +1,5 @@
 ﻿using DB.Application.UseCases.Orders;
+using DB.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,5 +54,17 @@ public class OrdersController : ControllerBase
 		var orders = await _orderService.GetByUserAsync(userId);
 
 		return Ok(orders);
+	}
+
+	[HttpPost]
+	[Authorize]
+	public async Task<IActionResult> CreateOrder([FromBody] CreateOrder order)
+	{
+        var userId = HttpContext.User.FindFirst("Id").Value;
+		order.UserId = userId;
+
+        await _orderService.CreateOrderAsync(order);
+
+		return Ok();
 	}
 }

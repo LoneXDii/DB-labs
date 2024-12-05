@@ -1,11 +1,13 @@
 ﻿using DB.Domain.Abstractions;
 using DB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using SupportService.Infrastructure.Data;
+using System.Data;
 
 namespace DB.Infrastructure.Repositories;
 
-internal class OrderRepository : IRepository<Order>
+internal class OrderRepository : IOrderRepository
 {
 	private readonly AppDbContext _dbContext;
 
@@ -125,10 +127,55 @@ internal class OrderRepository : IRepository<Order>
 		return orders;
 	}
 
-	public Task AddAsync(Order entity)
+	public async Task AddAsync(CreateOrder entity)
 	{
-		throw new NotImplementedException();
-	}
+        int orderId = 0;
+
+		var connection = _dbContext.Database.GetDbConnection() as MySqlConnection;
+
+        await connection.OpenAsync();
+
+        using (var transaction = await connection.BeginTransactionAsync())
+        {
+            try
+            {
+                var sqlInsert = @"
+            INSERT INTO Orders (start, end, price, closed, user_id)
+            VALUES (@start, @end, 0, FALSE, @userId);";
+
+                using (var command = new MySqlCommand(sqlInsert, connection, transaction))
+                {
+                    command.Parameters.Add(new MySqlParameter("@start", entity.Start));
+                    command.Parameters.Add(new MySqlParameter("@end", entity.Start.AddDays(1)));
+                    command.Parameters.Add(new MySqlParameter("@userId", entity.UserId));
+
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                var sqlGetLastId = "SELECT LAST_INSERT_ID();";
+
+                using (var command = new MySqlCommand(sqlGetLastId, connection, transaction))
+                {
+                    orderId = Convert.ToInt32(await command.ExecuteScalarAsync());
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+		foreach (var id in entity.CarsIds)
+		{
+			var sql = @"INSERT INTO Cars_orders (car_id, order_id)
+						VALUES ({0}, {1});";
+
+            await _dbContext.Database.ExecuteSqlRawAsync(sql, id, orderId);
+        }
+    }
 
 	public Task DeleteAsync(int id)
 	{

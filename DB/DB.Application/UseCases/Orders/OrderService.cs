@@ -1,13 +1,14 @@
-﻿using DB.Domain.Abstractions;
+﻿using DB.Application.Exceptions;
+using DB.Domain.Abstractions;
 using DB.Domain.Entities;
 
 namespace DB.Application.UseCases.Orders;
 
 internal class OrderService : IOrderService
 {
-	private readonly IRepository<Order> _repository;
+	private readonly IOrderRepository _repository;
 
-	public OrderService(IRepository<Order> repository)
+	public OrderService(IOrderRepository repository)
 	{
 		_repository = repository;
 	}
@@ -31,5 +32,15 @@ internal class OrderService : IOrderService
 		var orders = await _repository.FilterByStringAsync("user_id", userId);
 
 		return orders;
+	}
+
+	public async Task CreateOrderAsync(CreateOrder order)
+	{
+		if (!order.CarsIds.Any())
+		{
+			throw new BadRequestException("Cannot create empty order");
+		}
+
+		await _repository.AddAsync(order);
 	}
 }

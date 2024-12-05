@@ -8,4 +8,5 @@ public interface IOrderService
 	Task<Order> GetByIdAsync(int id);
 	Task<List<Order>> GetAllAsync();
 	Task<List<Order>> GetByUserAsync(string userId);
+	Task CreateOrderAsync(CreateOrder order);
 }
